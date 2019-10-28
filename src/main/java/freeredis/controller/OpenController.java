@@ -4,10 +4,7 @@ import de.felixroske.jfxsupport.FXMLController;
 import freeredis.entity.Person;
 import freeredis.view.OpenView;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @FXMLController
@@ -63,6 +60,14 @@ public class OpenController {
     @FXML
     private void handleDeletePerson() {
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
-        personTable.getItems().remove(selectedIndex);
+        if(selectedIndex >= 0){
+            personTable.getItems().remove(selectedIndex);
+        }else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("不能删除");
+            alert.setHeaderText("没有选中删除项");
+            alert.setContentText("请选中后继续");
+            alert.showAndWait();
+        }
     }
 }

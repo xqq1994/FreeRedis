@@ -39,5 +39,24 @@ public class OpenController {
         // Initialize the person table with the two columns.
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
+        // Clear person details.
+        showPersonDetails(null);
+
+        // Listen for selection changes and show the person details when changed.
+        personTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> showPersonDetails(newValue));
+    }
+
+    private void showPersonDetails(Person person) {
+        if (person != null) {
+            // Fill the labels with info from the person object.
+            firstNameLabel.setText(person.getFirstName());
+            lastNameLabel.setText(person.getLastName());
+            addressLabel.setText(person.getAddress());
+        } else {
+            firstNameLabel.setText("");
+            lastNameLabel.setText("");
+            addressLabel.setText("");
+        }
     }
 }

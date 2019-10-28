@@ -59,4 +59,10 @@ public class OpenController {
             addressLabel.setText("");
         }
     }
+
+    @FXML
+    private void handleDeletePerson() {
+        int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
+        personTable.getItems().remove(selectedIndex);
+    }
 }

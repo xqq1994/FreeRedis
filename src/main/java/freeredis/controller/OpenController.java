@@ -1,11 +1,19 @@
 package freeredis.controller;
 
 import de.felixroske.jfxsupport.FXMLController;
+import freeredis.Main;
 import freeredis.entity.Person;
+import freeredis.view.AddOrEditView;
 import freeredis.view.OpenView;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.IOException;
 
 @FXMLController
 public class OpenController {
@@ -29,6 +37,8 @@ public class OpenController {
     public Button deleteButton;
     @Autowired
     private OpenView openView;
+    @Autowired
+    private AddOrEditView addOrEditView;
 
     @FXML
     private void initialize() {
@@ -70,4 +80,47 @@ public class OpenController {
             alert.showAndWait();
         }
     }
+
+    public boolean showPersonEditDialog(Person person) {
+        try {
+            Main.showView(AddOrEditView.class, Modality.NONE);
+            addOrEditView.setPerson(person);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @FXML
+    private void handleNewPerson() {
+        Person tempPerson = new Person();
+        boolean okClicked = showPersonEditDialog(tempPerson);
+        if (okClicked) {
+            openView.getPersonData().add(tempPerson);
+        }
+    }
+
+    /**
+     * Called when the user clicks the edit button. Opens a dialog to edit
+     * details for the selected person.
+     */
+    @FXML
+    private void handleEditPerson() {
+        Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
+        if (selectedPerson != null) {
+            boolean okClicked = showPersonEditDialog(selectedPerson);
+            if (okClicked) {
+                showPersonDetails(selectedPerson);
+            }
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("没有选中");
+            alert.setHeaderText("没有选中项");
+            alert.setContentText("请选中后继续");
+            alert.showAndWait();
+        }
+    }
+
 }

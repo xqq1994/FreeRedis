@@ -45,8 +45,8 @@
                         </GridPane>
                         <HBox layoutX="512.0" layoutY="672.0" spacing="20.0">
                             <children>
-                                <Button fx:id="newButton" layoutX="512.0" layoutY="672.0" mnemonicParsing="false" text="New" />
-                                <Button fx:id="editButton" layoutX="563.0" layoutY="672.0" mnemonicParsing="false" text="Edit" />
+                                <Button fx:id="newButton" layoutX="512.0" layoutY="672.0" mnemonicParsing="false" onAction="#handleNewPerson" text="New" />
+                                <Button fx:id="editButton" layoutX="563.0" layoutY="672.0" mnemonicParsing="false" onAction="#handleEditPerson" text="Edit" />
                                 <Button fx:id="deleteButton" layoutX="608.0" layoutY="672.0" mnemonicParsing="false" onAction="#handleDeletePerson" text="Delete" />
                             </children>
                         </HBox>

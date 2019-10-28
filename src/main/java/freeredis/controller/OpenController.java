@@ -1,31 +1,43 @@
 package freeredis.controller;
 
-
 import de.felixroske.jfxsupport.FXMLController;
-import javafx.event.Event;
+import freeredis.entity.Person;
+import freeredis.view.OpenView;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @FXMLController
 public class OpenController {
     @FXML
-    public TextField text_1;
+    public TableView<Person> personTable;
+    @FXML
+    public TableColumn<Person, String> firstNameColumn;
+    @FXML
+    public TableColumn<Person, String> lastNameColumn;
+    @FXML
+    public Label firstNameLabel;
+    @FXML
+    public Label lastNameLabel;
+    @FXML
+    public Label addressLabel;
+    @FXML
+    public Button newButton;
+    @FXML
+    public Button editButton;
+    @FXML
+    public Button deleteButton;
+    @Autowired
+    private OpenView openView;
 
     @FXML
-    public void showDateTime(Event event) {
-        System.out.println("Button Clicked!");
-
-        Date now = new Date();
-
-        DateFormat df = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
-        String dateTimeString = df.format(now);
-        // Show in VIEW
-        text_1.setText(dateTimeString);
-
+    private void initialize() {
+        personTable.setItems(openView.getPersonData());
+        // Initialize the person table with the two columns.
+        firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
+        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
     }
-
 }

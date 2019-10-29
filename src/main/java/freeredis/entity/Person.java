@@ -20,6 +20,12 @@ public class Person implements Serializable {
         this.address = new SimpleStringProperty("some address");
     }
 
+    public Person(String firstName, String lastName, String address) {
+        this.firstName = new SimpleStringProperty(firstName);
+        this.lastName = new SimpleStringProperty(lastName);
+        this.address = new SimpleStringProperty(address);
+    }
+
     public String getFirstName() {
         return firstName.get();
     }

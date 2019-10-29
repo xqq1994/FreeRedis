@@ -3,15 +3,22 @@ package freeredis.controller;
 import de.felixroske.jfxsupport.FXMLController;
 import freeredis.Main;
 import freeredis.entity.Person;
+import freeredis.util.Persistant;
 import freeredis.view.OpenView;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.File;
+import java.io.IOException;
 
 @FXMLController
 public class OpenController {
@@ -19,8 +26,6 @@ public class OpenController {
     public TableView<Person> personTable;
     @FXML
     public TableColumn<Person, String> firstNameColumn;
-    @FXML
-    public TableColumn<Person, String> lastNameColumn;
     @FXML
     public Label firstNameLabel;
     @FXML
@@ -33,6 +38,12 @@ public class OpenController {
     public Button editButton;
     @FXML
     public Button deleteButton;
+    @FXML
+    public Button exportButton;
+    @FXML
+    public Button inputButton;
+    public Button ConnectButton;
+    public Button InputButton;
     @Autowired
     private OpenView openView;
 
@@ -41,7 +52,6 @@ public class OpenController {
         personTable.setItems(openView.getPersonData());
         // Initialize the person table with the two columns.
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
-        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
         // Clear person details.
         showPersonDetails(null);
         // Listen for selection changes and show the person details when changed.
@@ -139,4 +149,31 @@ public class OpenController {
         }
     }
 
+    @FXML
+    private void exportPerson(ActionEvent actionEvent){
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(Main.getStage());
+        ObservableList<Person> personData = openView.personData;
+        try {
+            Persistant.savePersons(personData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(file);
+    }
+
+    @FXML
+    public void InputPerson(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showOpenDialog(Main.getStage());
+        System.out.println(file);
+    }
+    @FXML
+    public void connect(ActionEvent actionEvent) {
+
+    }
 }

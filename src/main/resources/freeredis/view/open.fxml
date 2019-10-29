@@ -10,15 +10,21 @@
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <TableView fx:id="personTable" layoutX="14.0" layoutY="14.0" prefHeight="726.0" prefWidth="324.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="personTable" layoutX="14.0" layoutY="14.0" prefHeight="703.0" prefWidth="324.0" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columns>
                                 <TableColumn fx:id="firstNameColumn" prefWidth="75.0" text="First Name" />
-                                <TableColumn fx:id="lastNameColumn" prefWidth="75.0" text="Last Name" />
                             </columns>
                             <columnResizePolicy>
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                         </TableView>
+                  <HBox layoutY="697.0" prefHeight="23.0" prefWidth="324.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <Button fx:id="InputButton" layoutY="697.0" mnemonicParsing="false" onAction="#InputPerson" prefHeight="23.0" prefWidth="82.0" text="Input" />
+                        <Button fx:id="exportButton" layoutX="82.0" layoutY="697.0" mnemonicParsing="false" onAction="#exportPerson" prefHeight="23.0" prefWidth="82.0" text="Export" />
+                        <Button fx:id="ConnectButton" layoutX="164.0" layoutY="697.0" mnemonicParsing="false" onAction="#connect" prefHeight="23.0" prefWidth="169.0" text="Connect" />
+                     </children>
+                  </HBox>
                     </children>
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">

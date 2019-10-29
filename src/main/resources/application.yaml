@@ -4,5 +4,5 @@ spring:
 javafx:
     stage:
         resizable: false
-    title: FreeRedis
+    title: FreeRedis Desktop Manager v0.0.1
     appicons: icon/redis-white.png

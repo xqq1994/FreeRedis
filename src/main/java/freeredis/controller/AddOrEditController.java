@@ -52,6 +52,7 @@ public class AddOrEditController {
             getStage().close();
         }
     }
+
     //设置
     public void setPerson(Person person) {
         this.person = person;

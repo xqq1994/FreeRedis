@@ -3,7 +3,6 @@ package freeredis.controller;
 import de.felixroske.jfxsupport.FXMLController;
 import freeredis.Main;
 import freeredis.entity.Person;
-import freeredis.view.AddOrEditView;
 import freeredis.view.OpenView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,6 +35,7 @@ public class OpenController {
     public Button deleteButton;
     @Autowired
     private OpenView openView;
+
     @FXML
     private void initialize() {
         personTable.setItems(openView.getPersonData());

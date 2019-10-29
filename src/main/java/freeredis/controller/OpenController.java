@@ -5,15 +5,14 @@ import freeredis.Main;
 import freeredis.entity.Person;
 import freeredis.view.AddOrEditView;
 import freeredis.view.OpenView;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.IOException;
 
 @FXMLController
 public class OpenController {
@@ -37,9 +36,6 @@ public class OpenController {
     public Button deleteButton;
     @Autowired
     private OpenView openView;
-    @Autowired
-    private AddOrEditView addOrEditView;
-
     @FXML
     private void initialize() {
         personTable.setItems(openView.getPersonData());
@@ -48,7 +44,6 @@ public class OpenController {
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
         // Clear person details.
         showPersonDetails(null);
-
         // Listen for selection changes and show the person details when changed.
         personTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showPersonDetails(newValue));
@@ -70,9 +65,9 @@ public class OpenController {
     @FXML
     private void handleDeletePerson() {
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
-        if(selectedIndex >= 0){
+        if (selectedIndex >= 0) {
             personTable.getItems().remove(selectedIndex);
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("不能删除");
             alert.setHeaderText("没有选中删除项");
@@ -83,9 +78,30 @@ public class OpenController {
 
     public boolean showPersonEditDialog(Person person) {
         try {
-            Main.showView(AddOrEditView.class, Modality.NONE);
-            addOrEditView.setPerson(person);
-            return true;
+
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/addOrEdit.fxml"));
+            AnchorPane page = loader.load();
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit Person");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            AddOrEditController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setPerson(person);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+//            addOrEditView.setPerson(person);
+//            Main.showView(AddOrEditView.class, Modality.NONE);
+//            return addOrEditController.isOkClicked();
         } catch (Exception e) {
             e.printStackTrace();
             return false;

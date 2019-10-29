@@ -1,13 +1,14 @@
 package freeredis.controller;
 
 import de.felixroske.jfxsupport.FXMLController;
-import freeredis.Main;
 import freeredis.entity.Person;
 import freeredis.view.AddOrEditView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @FXMLController
@@ -18,22 +19,27 @@ public class AddOrEditController {
     public TextField lastNameField;
     @FXML
     public TextField addressField;
+    @FXML
+    private AnchorPane anchorPane;
 
-    private Person person = new Person();
+    private Person person;
 
     @Autowired
     private AddOrEditView addOrEditView;
 
     private boolean okClicked = false;
+    private Stage stage;
 
     @FXML
     private void initialize() {
-
     }
 
-
     public void handleCancel(ActionEvent actionEvent) {
-        Main.getStage().close();
+        getStage().close();
+    }
+
+    public Stage getStage() {
+        return (Stage) anchorPane.getScene().getWindow();
     }
 
     public void handleOk(ActionEvent actionEvent) {
@@ -41,11 +47,12 @@ public class AddOrEditController {
             this.person.setFirstName(firstNameField.getText());
             this.person.setLastName(lastNameField.getText());
             this.person.setAddress(addressField.getText());
+
             okClicked = true;
-            Main.getStage().close();
+            getStage().close();
         }
     }
-
+    //设置
     public void setPerson(Person person) {
         this.person = person;
         firstNameField.setText(person.getFirstName());
@@ -80,5 +87,9 @@ public class AddOrEditController {
             alert.showAndWait();
             return false;
         }
+    }
+
+    public void setDialogStage(Stage dialogStage) {
+        stage = dialogStage;
     }
 }

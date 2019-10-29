@@ -3,8 +3,6 @@ package freeredis.view;
 import de.felixroske.jfxsupport.AbstractFxmlView;
 import de.felixroske.jfxsupport.FXMLView;
 import freeredis.entity.Person;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 @FXMLView
 public class AddOrEditView extends AbstractFxmlView {
@@ -18,4 +16,6 @@ public class AddOrEditView extends AbstractFxmlView {
     public void setPerson(Person person) {
         this.person = person;
     }
+
+
 }

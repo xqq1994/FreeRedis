@@ -2,6 +2,7 @@ package freeredis;
 
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import freeredis.view.OpenView;
+import javafx.stage.Stage;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 

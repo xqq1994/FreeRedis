@@ -4,4 +4,5 @@ spring:
 javafx:
     stage:
         resizable: false
-    title: MyCoolApp
+    title: FreeRedis
+    appicons: icon/redis-white.png

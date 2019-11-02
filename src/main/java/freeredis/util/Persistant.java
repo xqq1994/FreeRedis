@@ -1,7 +1,7 @@
 package freeredis.util;
 
 import com.alibaba.fastjson.JSON;
-import freeredis.entity.Person;
+import freeredis.entity.HostAndPort;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -22,12 +22,12 @@ public class Persistant {
     // 1、每个 Person 一行   
     // 2、每行依次存放 name、birthday、male 三个属性值，用 tab 隔开   
     // 3、birthday 属性保存的是毫秒数，male 属性保存的是字符串   
-    public static void savePersons(List<Person> persons) throws IOException {
+    public static void savePersons(List<HostAndPort> hostAndPorts) throws IOException {
 
         // 生成文件内容   
         StringBuilder data = new StringBuilder();
-        for (Person person : persons) {
-            data.append(getPersonString(person)).append("\n");
+        for (HostAndPort hostAndPort : hostAndPorts) {
+            data.append(getPersonString(hostAndPort)).append("\n");
         }
 
         // 保存文件内容   
@@ -37,13 +37,13 @@ public class Persistant {
         System.out.println("对象保存完毕。");
     }
 
-    private static String getPersonString(Person person) {
-        return JSON.toJSONString(person);
+    private static String getPersonString(HostAndPort hostAndPort) {
+        return JSON.toJSONString(hostAndPort);
     }
 
     // 从文件中读取 Person 对象   
-    public static ObservableList<Person> readPersons() throws IOException {
-        ObservableList<Person> result = FXCollections.observableArrayList();
+    public static ObservableList<HostAndPort> readPersons() throws IOException {
+        ObservableList<HostAndPort> result = FXCollections.observableArrayList();
         BufferedReader reader = new BufferedReader(new FileReader(filename));
         String line;
         while ((line = reader.readLine()) != null) {
@@ -54,8 +54,8 @@ public class Persistant {
     }
 
     // 通过一行文件内容生成一个 Person 对象   
-    private static Person getPersonFromString(String line) {
-        return JSON.parseObject(line, Person.class);
+    private static HostAndPort getPersonFromString(String line) {
+        return JSON.parseObject(line, HostAndPort.class);
     }
 
 }

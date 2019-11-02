@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
+
 @FXMLController
 public class OverViewController {
     @FXML
@@ -15,6 +17,8 @@ public class OverViewController {
     public Button connectButton;
     @FXML
     public TreeTableColumn hostColumn;
+    @FXML
+    public TreeTableView treeTableView;
 
     public void exportPerson(ActionEvent actionEvent) {
 
